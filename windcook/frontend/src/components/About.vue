@@ -1,0 +1,70 @@
+<template>
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-sm-9">
+                <div class="panel panel-default">
+                    <div class="panel-heading site-list-title">
+                        <h4>{{ title }}</h4>
+                    </div>
+                    <div v-html="markdown"></div>
+
+
+
+
+                </div>
+            </div><!--col-xs-12 col-sm-9-->
+            <div class="hidden-xs col-sm-3 site-me">
+                <div class="panel panel-default">
+                    <div class="panel-heading tags-title">
+                        <h4>目录</h4>
+                    </div>
+                    <div v-html='toc'>
+
+                    </div>
+                </div><!--panel panel-default-->
+
+
+
+            </div><!-- hidden-xs col-sm-3 site-me -->
+        </div><!-- row -->
+    </div><!-- container -->
+
+</template>
+
+<script>
+import axios from 'axios'
+
+export default {
+
+  name: 'HelloWorld',
+  data () {
+    return {
+      title: '',
+      markdown:'',
+      toc:''
+    }
+},mounted () {
+
+        //Vue.prototype.$axios = axios,
+        axios
+          .get('http://127.0.0.1:8000/api/detail/123/')
+          .then(response => (this.title = response.data.blog.title,
+                            this.markdown = response.data.blog.body,
+                            this.toc = response.data.blog.toc
+                ))
+      }
+}
+</script>
+
+<!-- Add "scoped" attribute to limit CSS to this component only -->
+<style scoped>
+/* =Base
+-------------------------------------------------------------- */
+.site-list-title{
+    font-weight: bold;
+    text-align: center;
+}
+.tags-title{
+    text-align: center;
+}
+</style>
