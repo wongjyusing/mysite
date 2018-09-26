@@ -95,19 +95,50 @@ export default {
       markdown:'',
       toc:''
     }
-},mounted () {
-        this.blog_slug = this.$route.params.slug;
+},
+mounted() {
+           // 接受url参数slug
+        this.getSlug(this.$route.params.slug);
+        },
+
+        beforeRouteUpdate(to, from, next) {
+            this.detail = this.getSlug(to.params.slug);
+           next();
+       },
+
+        methods: {
+          getSlug(slug) {
+              axios
+                .get('http://127.0.0.1:8000/api/tag/'+ slug)
+                .then(response => (this.blogs = response.data.blogs
+                      ))
+           }
+       }
+   };
+
+
+
+
+/*mounted () {
+        this.blog_slug = this.getSlug(this.$route.params.slug);
         //Vue.prototype.$axios = axios,
-        axios
-          .get('http://127.0.0.1:8000/api/tag/'+ this.blog_slug)
-          .then(response => (this.blogs = response.data.blogs
-                ))
-      },
-      beforeRouteUpdate(to,from,next){
-          this.blog_slug = this.$route.params.slug;
-          next();
-      }
-}
+        beforeRouteUpdate (to, from, next) {
+            this.blog_slug = this.getSlug(to.params.slug)
+            next();
+
+      }},
+
+    methods:{
+        getSlug(slug){
+            axios
+              .get('http://127.0.0.1:8000/api/tag/'+ slug)
+              .then(response => (this.blogs = response.data.blogs
+                    ))
+        }
+    },
+
+}*/
+
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
