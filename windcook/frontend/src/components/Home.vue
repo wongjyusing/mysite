@@ -28,7 +28,7 @@
                     </div>
                     <ul v-for='naw in space_link'  class="list-group">
 
-                        <li class="list-group-item"><a v-bind:href="naw.link">{{naw.name}}</a></li>
+                        <li class="list-group-item"><a v-bind:href="naw.link" target="_blank">{{naw.name}}</a></li>
                     </ul>
                 </div><!--panel panel-default-->
 
@@ -49,7 +49,7 @@
                     </div>
                     <ul v-for='naw in book_link'  class="list-group">
 
-                        <li class="list-group-item"><a v-bind:href="naw.link">{{naw.name}}</a></li>
+                        <li class="list-group-item"><a v-bind:href="naw.link" target="_blank">{{naw.name}}</a></li>
                     </ul>
                 </div><!--panel panel-default-->
 
@@ -59,7 +59,7 @@
                     </div>
                     <ul v-for='naw in friend_link'  class="list-group">
 
-                        <li class="list-group-item"><a v-bind:href="naw.link">{{naw.name}}</a></li>
+                        <li class="list-group-item"><a v-bind:href="naw.link" target="_blank">{{naw.name}}</a></li>
                     </ul>
                 </div><!--panel panel-default-->
 
@@ -103,6 +103,16 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+a{
+    color: #111;
+}
+a:link {text-decoration:none;}
+
+a:visited {text-decoration:none;}
+a:hover { text-decoration:none;}
+ul {
+    list-style-type:none;
+}
 /* =Base
 -------------------------------------------------------------- */
 .site-list-title{

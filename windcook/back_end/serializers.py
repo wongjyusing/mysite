@@ -32,7 +32,10 @@ class TagListSerializer(serializers.ModelSerializer):
 
 
 # 通用工具部分序列化
-
+class GitBookLinkSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ToolBoxModels.GitBookLink
+        fields = ('name', 'link','book_status')
 
 class SiteDataSerializer(serializers.ModelSerializer):
     class Meta:

@@ -84,7 +84,7 @@ class About(models.Model):
     author = models.CharField(verbose_name='作者',default='sing',max_length=50)
     created_time = models.DateTimeField(verbose_name='创建时间',auto_now_add=True)
     update_time = models.DateTimeField(verbose_name='修改时间',auto_now=True)
-    
+
 
 
     class Meta:
@@ -95,3 +95,16 @@ class About(models.Model):
     # 使对象在后台显示更友善
     def __str__(self):
         return self.title
+
+class GitBookLink(models.Model):
+    name = models.CharField(max_length=64,verbose_name='链接名称')
+    link = models.URLField('书籍链接', help_text='请填写http或https开头的完整形式地址')
+    book_status = models.CharField(verbose_name='状态',default='未完成',max_length=50)
+    class Meta:
+        verbose_name = '书籍'
+        verbose_name_plural = 'GitBook链接列表'
+        ordering = ['id']  # 排序，按id排序
+
+    # 使对象在后台显示更友善
+    def __str__(self):
+        return self.name

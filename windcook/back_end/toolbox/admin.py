@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import MySiteData,Home,About,FriendLink,SpaceLink,BookLink
+from .models import MySiteData,Home,About,FriendLink,SpaceLink,BookLink,GitBookLink
 # Register your models here.
 @admin.register(MySiteData)
 class MySiteDataAdmin(admin.ModelAdmin):
@@ -25,3 +25,7 @@ class SpaceLinkAdmin(admin.ModelAdmin):
 @admin.register(BookLink)
 class BookLinkAdmin(admin.ModelAdmin):
     list_display = ('name', 'link')
+
+@admin.register(GitBookLink)
+class GitBookLinkAdmin(admin.ModelAdmin):
+    list_display = ('name', 'link','book_status')

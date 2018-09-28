@@ -3,7 +3,7 @@ import Router from 'vue-router'
 import Home from '@/components/Home'
 import About from '@/components/About'
 import BlogList from '@/components/BlogList'
-import TagList from '@/components/TagList'
+import Learn from '@/components/Learn'
 import BlogDetail from '@/components/BlogDetail'
 
 import BlogTagList from '@/components/BlogTagList'
@@ -27,9 +27,9 @@ export default new Router({
   component: About
 },
 {
-  path: '/tagssss',
-  name: 'TagList',
-  component: TagList
+  path: '/learn',
+  name: 'Learn',
+  component: Learn
 },{
   path: '/detail/:slug',
   name: 'BlogDetail',

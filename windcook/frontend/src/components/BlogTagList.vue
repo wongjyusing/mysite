@@ -4,7 +4,7 @@
             <div class="col-xs-12 col-sm-9">
                 <div class="panel panel-default">
                 <div class="panel-heading site-list-title">
-                    <h4>博客列表</h4>
+                    <h4>{{blog_tag.name}}的博文列表</h4>
                 </div>
                 <div class="">
                     <table class="table table-bordered table-hover site-blog-table">
@@ -68,7 +68,7 @@
                     </div>
                     <ul v-for='naw in space_link'  class="list-group">
 
-                        <li class="list-group-item"><a v-bind:href="naw.link">{{naw.name}}</a></li>
+                        <li class="list-group-item"><a v-bind:href="naw.link" target="_blank">{{naw.name}}</a></li>
                     </ul>
                 </div><!--panel panel-default-->
 
@@ -89,7 +89,7 @@
                     </div>
                     <ul v-for='naw in book_link'  class="list-group">
 
-                        <li class="list-group-item"><a v-bind:href="naw.link">{{naw.name}}</a></li>
+                        <li class="list-group-item"><a v-bind:href="naw.link" target="_blank">{{naw.name}}</a></li>
                     </ul>
                 </div><!--panel panel-default-->
 
@@ -99,7 +99,7 @@
                     </div>
                     <ul v-for='naw in friend_link'  class="list-group">
 
-                        <li class="list-group-item"><a v-bind:href="naw.link">{{naw.name}}</a></li>
+                        <li class="list-group-item"><a v-bind:href="naw.link" target="_blank">{{naw.name}}</a></li>
                     </ul>
                 </div><!--panel panel-default-->
 
@@ -126,6 +126,7 @@ export default {
         friend_link:null,
         space_link:'',
         book_link:'',
+        blog_tag:'',
     }
 },
 mounted() {
@@ -143,7 +144,7 @@ mounted() {
               axios
                 .get('http://127.0.0.1:8000/api/tag/'+ slug + '/?page=' + page)
                 .then(response => (this.blogs = response.data.blogs,
-
+                    this.blog_tag = response.data.blog_tag,
                     this.pages = parseInt(response.data.page.page_count),
                     this.now_page = parseInt(response.data.page.now_page),
                     this.friend_link = response.data.friend_link,
@@ -182,6 +183,16 @@ mounted() {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+a{
+    color: #111;
+}
+a:link {text-decoration:none;}
+
+a:visited {text-decoration:none;}
+a:hover { text-decoration:none;}
+ul {
+    list-style-type:none;
+}
 .site-list-title{
     font-weight: bold;
     text-align: center;
@@ -192,5 +203,8 @@ mounted() {
 .blog-list-tag li{
     float: left;
     list-style:none;
+}
+.page-card{
+    text-align: center;
 }
 </style>

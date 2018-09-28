@@ -13,7 +13,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 class BlogBase(APIView):
     def page_gen(self,contact_list,page):
 
-        paginator = Paginator(contact_list, 5,2)  # Show 10 contacts per page
+        paginator = Paginator(contact_list, 10,2)  # Show 10 contacts per page
 
         try:
             contacts = paginator.page(page)
@@ -123,6 +123,20 @@ class BlogTagList(BlogBase):
         context['blogs'] = serializers.BlogListSerializer(blogs, many=True).data
 
         return Response(context)
+
+class BookList(APIView):
+    def get(self, request, format=None):
+        context = {}
+        page = request.GET.get('page',1)
+        context['gitbook'] = serializers.GitBookLinkSerializer(ToolBoxModels.GitBookLink.objects.all(),many=True).data
+        context['friend_link'] = serializers.FriendLinkSerializer(ToolBoxModels.FriendLink.objects.all(),many=True).data
+        context['space_link'] = serializers.BookLinkSerializer(ToolBoxModels.SpaceLink.objects.all(),many=True).data
+        context['book_link'] = serializers.SpaceLinkSerializer(ToolBoxModels.BookLink.objects.all(),many=True).data
+        context['toolbox_tags'] = serializers.BlogListTagSerializer(BlogModels.BlogTag.objects.all(),many=True).data
+
+
+        return Response(context)
+
 
 # 通用工具视图配置
 

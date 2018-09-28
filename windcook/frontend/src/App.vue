@@ -2,7 +2,7 @@
   <div id="app">
       <header class="site-header">
           <div class="site-branding">
-              <h1 class="site-title"><a href="/">{{ logo }}</a></h1>
+              <h1 class="site-title" style="color:#111"><a href="/" style="color: #111">{{ logo }}</a></h1>
               <div class="site-introduction">{{ introduction }}</div>
           </div>
           <nav class="main-navigation">
@@ -12,7 +12,7 @@
                       <ul class="menu">
                           <li exact><router-link :to="{ name: 'Home', params: {} }" exact>首页</router-link></li>
                           <li exact><router-link :to="{ name: 'BlogList', params: {page:'?page=1'} }">博客列表</router-link></li>
-                          <li exact><router-link :to="{ name: 'TagList', params: {} }">教程</router-link></li>
+                          <li exact><router-link :to="{ name: 'Learn', params: {} }">教程</router-link></li>
                           <li exact><router-link :to="{ name: 'About', params: {} }">关于</router-link></li>
                       </ul>
                   </div>
@@ -75,13 +75,15 @@ export default {
 
 
 a{
-    color: #111
+    color: #111;
 }
 a:link {text-decoration:none;}
 
 a:visited {text-decoration:none;}
 a:hover { text-decoration:none;}
-
+ul {
+    list-style-type:none;
+}
 .home-template .main-header {
   padding-top: 62px;
   padding-bottom: 62px;
