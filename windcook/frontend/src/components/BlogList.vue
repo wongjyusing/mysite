@@ -6,25 +6,58 @@
                 <div class="panel-heading site-list-title">
                     <h4>博客列表</h4>
                 </div>
-                    <table class="table table-bordered table-hover site-blog-table">
-                        <thead>
-                            <tr>
-                                <th>标题</th>
-                                <th>时间</th>
-                                <th>所属标签</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-
-                                <tr v-for='blog in blogs' >
-
-                                    <th scope="row"><router-link :to="{ name: 'BlogDetail', params: {'slug':blog.slug} }">{{ blog.title}}</router-link></th>
-                                    <td>{{ blog.created_time.slice(0,10)}}</td>
-
-                                    <td class="blog-list-tag"><li v-for='tag in blog.blog_tag'><router-link :to="{ name: 'BlogTagList', params: {'slug':tag.slug} }">{{ tag.name}}</router-link>,</li></td>
+                    <div class="">
+                        <table class="table table-bordered table-hover site-blog-table">
+                            <thead>
+                                <tr>
+                                    <th>标题</th>
+                                    <th>时间</th>
+                                    <th>所属标签</th>
                                 </tr>
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+
+                                    <tr v-for='blog in blogs' >
+
+                                        <th scope="row"><router-link :to="{ name: 'BlogDetail', params: {'slug':blog.slug} }">{{ blog.title}}</router-link></th>
+                                        <td>{{ blog.created_time.slice(0,10)}}</td>
+
+                                        <td class="blog-list-tag"><li v-for='tag in blog.blog_tag'><router-link :to="{ name: 'BlogTagList', params: {'slug':tag.slug} }">{{ tag.name}}</router-link>&nbsp</li></td>
+                                    </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="page-card">
+                        <nav aria-label="Page navigation">
+                              <ul class="pagination">
+
+                                    <li v-if='now_page ==1' key='pre_page' class="disabled">
+                                        <span aria-hidden="true">&laquo;</span>
+                                    </li>
+                                    <li v-else key='pre_page'>
+                                        <router-link aria-label="Previous" :to="{ name: 'BlogList', params: {'page':(now_page - 1)} }"><span aria-hidden="false">&laquo;</span></router-link>
+                                    </li>
+
+
+                                <li v-for='page in pages'>
+                                    <router-link :to="{ name: 'BlogList', params: {'page':page} }">{{page}}</router-link>
+                                </li>
+
+
+
+
+
+                                <li v-if='now_page ==pages' key='next_page' class="disabled">
+                                    <span aria-hidden="true">&raquo;</span>
+                                </li>
+                                <li v-else key='next_page'>
+                                    <router-link aria-label="Next" :to="{ name: 'BlogList', params: {'page':(now_page - 1)} }"><span aria-hidden="false">&raquo;</span></router-link>
+                                </li>
+
+                              </ul>
+                            </nav>
+                    </div>
+
                 </div>
             </div><!--col-xs-12 col-sm-9-->
             <div class="hidden-xs col-sm-3 site-me">
@@ -32,10 +65,9 @@
                     <div class="panel-heading tags-title">
                         <h4>个人空间</h4>
                     </div>
-                    <ul class="list-group">
-                        <li class="list-group-item">Cras justo odio</li>
-                        <li class="list-group-item">Dapibus ac facilisis in</li>
-                        <li class="list-group-item">Morbi leo risus</li>
+                    <ul v-for='naw in space_link'  class="list-group">
+
+                        <li class="list-group-item"><a v-bind:href="naw.link">{{naw.name}}</a></li>
                     </ul>
                 </div><!--panel panel-default-->
 
@@ -43,11 +75,10 @@
                     <div class="panel-heading tags-title">
                         <h4>标签</h4>
                     </div>
-                    <div class="tags-cloud">
-                        <li class="list-group-item">Cras justo odio</li>
-                        <li class="list-group-item">Dapibus ac facilisis in</li>
-                        <li class="list-group-item">Morbi leo risus</li>
-                    </div>
+                    <ul v-for='naw in toolbox_tags'  class="list-group">
+
+                        <li class="list-group-item"><router-link :to="{ name: 'BlogTagList', params: {'slug':naw.slug} }">{{ naw.name}}</router-link></li>
+                    </ul>
 
                 </div><!--panel panel-default-->
 
@@ -55,10 +86,9 @@
                     <div class="panel-heading tags-title">
                         <h4>书籍推荐</h4>
                     </div>
-                    <ul class="list-group">
-                        <li class="list-group-item">Cras justo odio</li>
-                        <li class="list-group-item">Dapibus ac facilisis in</li>
+                    <ul v-for='naw in book_link'  class="list-group">
 
+                        <li class="list-group-item"><a v-bind:href="naw.link">{{naw.name}}</a></li>
                     </ul>
                 </div><!--panel panel-default-->
 
@@ -66,12 +96,9 @@
                     <div class="panel-heading tags-title">
                         <h4>友情链接</h4>
                     </div>
-                    <ul class="list-group">
-                        <li class="list-group-item">Cras justo odio</li>
-                        <li class="list-group-item">Dapibus ac facilisis in</li>
-                        <li class="list-group-item">Morbi leo risus</li>
-                        <li class="list-group-item">Porta ac consectetur ac</li>
-                        <li class="list-group-item">Vestibulum at eros</li>
+                    <ul v-for='naw in friend_link'  class="list-group">
+
+                        <li class="list-group-item"><a v-bind:href="naw.link">{{naw.name}}</a></li>
                     </ul>
                 </div><!--panel panel-default-->
 
@@ -87,25 +114,47 @@
 import axios from 'axios'
 
 export default {
-
   name: 'BlogList',
   data () {
     return {
       blogs: '',
-      markdown:'',
-      toc:''
+      toolbox_tags:'',
+      pages:null,
+      now_page:null,
+      friend_link:null,
+      space_link:'',
+      book_link:'',
+      //page_list:(1,this.pages)
     }
 },mounted () {
 
         //Vue.prototype.$axios = axios,
-        axios
-          .get('http://127.0.0.1:8000/api/')
-          .then(response => (this.blogs = response.data.blogs
-                ))
+        this.getPage(this.$route.params.page);
+        },
+
+        beforeRouteUpdate(to, from, next) {
+        this.getPage(to.params.page);
+           next();
+
       },
+      methods: {
+        getPage(page) {
+            axios
+              .get('http://127.0.0.1:8000/api/'+ '?page=' + page)
+              .then(response => (this.blogs = response.data.blogs,
+                                this.pages = parseInt(response.data.page.page_count),
+                                this.now_page = parseInt(response.data.page.now_page),
+                                this.friend_link = response.data.friend_link,
+                                this.space_link = response.data.space_link,
+                                this.book_link = response.data.book_link,
+                                this.toolbox_tags = response.data.toolbox_tags
+                    ));
+         }
+     }
+      /*
       beforeRouteUpdate(to,from,next){
           this.blog_slug = this.to.$route.params.slug;
-          next();}
+          next();}*/
 }
 </script>
 

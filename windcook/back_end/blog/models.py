@@ -2,8 +2,8 @@ from django.db import models
 
 # 标签
 class BlogTag(models.Model):
-    name = models.CharField(max_length=64)
-    slug = models.SlugField(unique=True)
+    name = models.CharField(max_length=64,verbose_name='标签名')
+    slug = models.SlugField(unique=True,verbose_name='标签索引')
     body = models.TextField(verbose_name='简介')
     class Meta:
         verbose_name = '标签'
@@ -33,3 +33,9 @@ class Blog(models.Model):
     # 使对象在后台显示更友善
     def __str__(self):
         return self.title
+    # 分页
+    def get_pre(self):# 上一页
+        return Blog.objects.filter(id__lt=self.id).order_by('-id').first()
+
+    def get_next(self):#下一页
+        return Blog.objects.filter(id__gt=self.id).order_by('id').first()

@@ -2,8 +2,8 @@
   <div id="app">
       <header class="site-header">
           <div class="site-branding">
-              <h1 class="site-title"><a href="/">花若盛開 蝴蝶自來</a></h1>
-              <div class="site-introduction">这是我用Django2.1和Vue.js2.0搭建的博客</div>
+              <h1 class="site-title"><a href="/">{{ logo }}</a></h1>
+              <div class="site-introduction">{{ introduction }}</div>
           </div>
           <nav class="main-navigation">
           <div class="container">
@@ -11,8 +11,8 @@
                   <div class="col-sm-12">
                       <ul class="menu">
                           <li exact><router-link :to="{ name: 'Home', params: {} }" exact>首页</router-link></li>
-                          <li exact><router-link :to="{ name: 'BlogList', params: {} }">博客列表</router-link></li>
-                          <li exact><router-link :to="{ name: 'TagList', params: {} }">标签</router-link></li>
+                          <li exact><router-link :to="{ name: 'BlogList', params: {page:'?page=1'} }">博客列表</router-link></li>
+                          <li exact><router-link :to="{ name: 'TagList', params: {} }">教程</router-link></li>
                           <li exact><router-link :to="{ name: 'About', params: {} }">关于</router-link></li>
                       </ul>
                   </div>
@@ -24,8 +24,8 @@
 
       <footer>
         <div class="diy-card">
-            <p>Copyright © 2018 Sing. Powered by Django.</p>
-            <p>粤ICP备18079962号</p>
+            <p>{{ source_of_power }}</p>
+            <p>{{ approval_number }}</p>
         </div>
     </footer>
 
@@ -34,11 +34,31 @@
 </template>
 
 <script>
-
+import axios from 'axios'
 export default {
   name: 'App',
+  data () {
+    return {
+      logo: '',
+      introduction:'',
+      source_of_power:'',
+      approval_number:''
+    }
+},mounted () {
 
-
+        //Vue.prototype.$axios = axios,
+        axios
+          .get('http://127.0.0.1:8000/api/site/')
+          .then(response => (this.logo = response.data.mysite[0].logo,
+                            this.introduction = response.data.mysite[0].introduction,
+                            this.source_of_power = response.data.mysite[0].source_of_power,
+                            this.approval_number = response.data.mysite[0].approval_number
+                ))
+      },
+      /*
+      beforeRouteUpdate(to,from,next){
+          this.blog_slug = this.to.$route.params.slug;
+          next();}*/
 }
 </script>
 
@@ -49,10 +69,7 @@ export default {
 /* =Base
 -------------------------------------------------------------- */
 
-.router-link-active {
-    border-bottom: 2px solid #e67e22;
-    margin-bottom: -2px;
-       }
+
 
 
 

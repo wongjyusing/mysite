@@ -39,7 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
 
-    'back_end.blog'
+    'back_end.blog',
+    'back_end.toolbox',
 
 ]
 

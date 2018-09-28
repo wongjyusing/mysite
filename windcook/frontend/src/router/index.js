@@ -17,7 +17,7 @@ export default new Router({
       component: Home
   },
   {
-    path: '/blogs',
+    path: '/blogs/:page',
     name: 'BlogList',
     component: BlogList
 },
@@ -35,7 +35,7 @@ export default new Router({
   name: 'BlogDetail',
   component: BlogDetail
 },{
-  path: '/tags/:slug',
+  path: '/tags/:slug/:page',
   name: 'BlogTagList',
   component: BlogTagList
 },
